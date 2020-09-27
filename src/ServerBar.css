@@ -1,0 +1,8 @@
+.serverBar {
+  background-color: #202225;
+  padding: 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  color: white;
+}
