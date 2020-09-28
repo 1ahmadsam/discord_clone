@@ -28,6 +28,7 @@
     0 2px 0 rgba(4, 4, 5, 0.05);
 }
 .body__navMenu {
+  color: #b9bbbe;
   align-items: center;
   display: flex;
 }
