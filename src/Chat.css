@@ -1,7 +1,7 @@
 .chat {
   display: flex;
   flex-direction: column-reverse;
-  /* overflow: hidden scroll; */
+  overflow: hidden scroll;
   width: 100%;
 }
 .chat__inputBox {
@@ -51,4 +51,13 @@
 
 .chat__input:focus {
   outline: none;
+}
+.chat__space {
+  display: block;
+  height: 30px;
+  width: 1px;
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto;
+  flex: 0 0 auto;
+  pointer-events: none;
 }
