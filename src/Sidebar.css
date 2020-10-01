@@ -27,3 +27,38 @@
   box-shadow: 0 1px rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05),
     0 2px 0 rgba(4, 4, 5, 0.05);
 }
+.sidebar__channels {
+  flex: 1;
+}
+.sidebar__userInfo {
+  height: 52px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0 8px;
+  margin-bottom: 1px;
+  background-color: #292b2f;
+  color: white;
+}
+.sidebar__userImage {
+  width: 32px;
+  border-radius: 50%;
+  height: 32px;
+}
+.sidebar__imageContainer {
+  margin-right: 8px;
+}
+.sidebar__userName {
+  font-size: 14px;
+  font-weight: 500;
+}
+.sidebar__userStatus {
+  width: 10px !important;
+  height: 10px !important;
+  color: #41af7d;
+
+  position: absolute;
+}

@@ -2,11 +2,25 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import { Auth0Provider } from '@auth0/auth0-react';
 import * as serviceWorker from './serviceWorker';
+import { StateProvider } from './StateProvider';
+import reducer, { initialState } from './reducer';
+
+const domain = process.env.REACT_APP_AUTH0_DOMAIN;
+const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <StateProvider initialState={initialState} reducer={reducer}>
+      <Auth0Provider
+        domain={domain}
+        clientId={clientId}
+        redirectUri={window.location.origin}
+      >
+        <App />
+      </Auth0Provider>
+    </StateProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

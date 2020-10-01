@@ -61,3 +61,7 @@
   flex: 0 0 auto;
   pointer-events: none;
 }
+.chat__messages {
+  display: flex;
+  flex-direction: column;
+}

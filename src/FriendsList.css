@@ -3,6 +3,7 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  flex-direction: column;
   position: relative;
   background-color: #2f3136;
 }
@@ -18,4 +19,19 @@
   font-size: 12px;
   line-height: 16px;
   font-weight: 600;
+}
+.friendsList__person {
+  position: relative;
+  max-width: 224px;
+  margin-left: 8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+  height: 42px;
+  padding: 0 8px;
+  color: white;
 }
