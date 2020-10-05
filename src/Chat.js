@@ -5,14 +5,32 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import EmojiEmotionsIcon from '@material-ui/icons/EmojiEmotions';
 import GifIcon from '@material-ui/icons/Gif';
 import RedeemIcon from '@material-ui/icons/Redeem';
+import messageService from './services/messages';
+import { useAuth0 } from '@auth0/auth0-react';
 const Chat = () => {
   const [message, setMessage] = useState('');
   const [allMessages, setAllMessages] = useState([]);
 
+  const { user } = useAuth0();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setAllMessages([...allMessages, message]);
-    setMessage('');
+    if (user) {
+      messageService
+        .create({
+          message: message,
+          profilePic: user?.picture,
+          username: user?.nickname,
+        })
+        .then((message) => {
+          console.log('message was sent!!', message);
+        })
+        .catch((err) => err);
+      setAllMessages([...allMessages, message]);
+      setMessage('');
+    } else {
+      console.log('invalid user');
+    }
   };
 
   return (

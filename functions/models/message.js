@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 
 const messageSchema = mongoose.Schema({
   message: String,
+  profilePic: String,
+  username: String,
+  image: String,
   date: Date,
 });
 

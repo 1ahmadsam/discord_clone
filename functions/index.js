@@ -25,12 +25,15 @@ app.use(cors());
 app.use(express.json());
 
 // API routes
-app.get('/', (req, res) => res.status(200).send('hello world'));
+app.get('/', (req, res) => res.status(200).send('hello world2'));
 
 app.post('/messages', async (req, res) => {
   const body = req.body;
   const message = new Message({
     message: body.message,
+    profilePic: body.profilePic,
+    username: body.username,
+    image: body.image,
     date: Date.now(),
   });
 
