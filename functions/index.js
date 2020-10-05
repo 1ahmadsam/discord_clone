@@ -25,7 +25,10 @@ app.use(cors());
 app.use(express.json());
 
 // API routes
-app.get('/', (req, res) => res.status(200).send('hello world2'));
+app.get('/messages', async (req, res) => {
+  const returnedMessages = await Message.find({});
+  return res.status(200).json(returnedMessages);
+});
 
 app.post('/messages', async (req, res) => {
   const body = req.body;

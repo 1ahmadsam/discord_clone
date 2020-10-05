@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Chat.css';
 import Message from './Message';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -13,6 +13,12 @@ const Chat = () => {
 
   const { user } = useAuth0();
 
+  useEffect(() => {
+    messageService.getAll().then((messages) => {
+      setAllMessages(messages);
+    });
+  }, []);
+  console.log('messages', allMessages);
   const handleSubmit = (e) => {
     e.preventDefault();
     if (user) {
@@ -57,7 +63,13 @@ const Chat = () => {
       <div className='chat__space'></div>
       <div className='chat__messages'>
         {allMessages.map((message) => (
-          <Message message={message} />
+          <Message
+            message={message.message}
+            profile={message.profilePic}
+            timestamp={message.date}
+            username={message.username}
+            key={message.id}
+          />
         ))}
       </div>
 

@@ -1,9 +1,21 @@
 .message {
+  display: flex;
   margin-top: 1.0625rem;
   padding-top: 0.125rem;
   padding-bottom: 0.125rem;
-  padding-left: 72px;
   padding-right: 48px;
+}
+.message__profile {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+.message__contents {
+  display: flex;
+  flex-direction: column;
 }
 .message__text {
   font-size: 1rem;
@@ -17,4 +29,19 @@
   user-select: text;
   color: #dcddde;
   font-weight: 400;
+}
+.message__header {
+  display: flex;
+  flex-direction: row;
+}
+.message__user {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.375rem;
+  color: #fff;
+  display: inline;
+  vertical-align: baseline;
+  position: relative;
+}
+.message__postDate {
 }
