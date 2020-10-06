@@ -7,17 +7,38 @@ import GifIcon from '@material-ui/icons/Gif';
 import RedeemIcon from '@material-ui/icons/Redeem';
 import messageService from './services/messages';
 import { useAuth0 } from '@auth0/auth0-react';
+import { gql, useQuery } from '@apollo/client';
+
+const ALL_MESSAGES = gql`
+  query {
+    allMessages {
+      message
+      date
+      id
+      username
+      profilePic
+    }
+  }
+`;
+
 const Chat = () => {
+  const result = useQuery(ALL_MESSAGES);
   const [message, setMessage] = useState('');
   const [allMessages, setAllMessages] = useState([]);
 
   const { user } = useAuth0();
 
   useEffect(() => {
-    messageService.getAll().then((messages) => {
-      setAllMessages(messages);
-    });
-  }, []);
+    // messageService.getAll().then((messages) => {
+    //   setAllMessages(messages);
+    // });
+
+    console.log('yohoto', result);
+    if (result.data) {
+      setAllMessages(result.data?.allMessages);
+    }
+  }, [result]);
+
   console.log('messages', allMessages);
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,11 +49,12 @@ const Chat = () => {
           profilePic: user?.picture,
           username: user?.nickname,
         })
-        .then((message) => {
+        .then((newMessage) => {
           console.log('message was sent!!', message);
+          setAllMessages([...allMessages, newMessage]);
         })
-        .catch((err) => err);
-      setAllMessages([...allMessages, message]);
+        .catch((err) => console.log(err));
+
       setMessage('');
     } else {
       console.log('invalid user');
