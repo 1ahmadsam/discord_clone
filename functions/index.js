@@ -1,9 +1,11 @@
 const functions = require('firebase-functions');
 const express = require('express');
-const { ApolloServer, gql } = require('apollo-server-express');
+const { ApolloServer, gql, UserInputError } = require('apollo-server-express');
+const { PubSub } = require('apollo-server');
 const cors = require('cors');
 const Message = require('./models/message');
 const mongoose = require('mongoose');
+const pubsub = new PubSub();
 const app = express();
 
 require('dotenv').config();
@@ -42,6 +44,9 @@ const typeDefs = gql`
       image: String
     ): Message
   }
+  type Subscription {
+    messageAdded: Message!
+  }
 `;
 
 const resolvers = {
@@ -51,8 +56,22 @@ const resolvers = {
   Mutation: {
     addMessage: async (root, args) => {
       const message = new Message({ ...args, date: Date.now() });
-      const savedMessage = await message.save();
-      return savedMessage;
+
+      try {
+        await message.save();
+      } catch (error) {
+        throw new UserInputError(error.message, {
+          invalidArgs: args,
+        });
+      }
+
+      pubsub.publish('MESSAGE_ADDED', { messageAdded: message });
+      return message;
+    },
+  },
+  Subscription: {
+    messageAdded: {
+      subscribe: () => pubsub.asyncIterator(['MESSAGE_ADDED']),
     },
   },
 };
@@ -61,12 +80,12 @@ const server = new ApolloServer({ typeDefs, resolvers });
 app.use(cors());
 app.use(express.json());
 server.applyMiddleware({ app });
+
 // API routes
 // app.get('/messages', async (req, res) => {
 //   const returnedMessages = await Message.find({});
 //   return res.status(200).json(returnedMessages);
 // });
-
 // app.post('/messages', async (req, res) => {
 //   const body = req.body;
 //   const message = new Message({
