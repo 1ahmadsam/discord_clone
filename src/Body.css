@@ -3,6 +3,7 @@
   flex-direction: column;
   flex: 1;
   background-color: #36393f;
+  height: 100%;
 }
 .body__nav {
   position: relative;
@@ -66,4 +67,5 @@
 .body__main {
   display: flex;
   height: 100%;
+  overflow: hidden;
 }

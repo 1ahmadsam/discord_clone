@@ -1,7 +1,6 @@
 .chat {
   display: flex;
   flex-direction: column-reverse;
-  overflow: hidden scroll;
   width: 100%;
 }
 .chat__inputBox {
@@ -64,4 +63,5 @@
 .chat__messages {
   display: flex;
   flex-direction: column;
+  overflow: hidden scroll;
 }

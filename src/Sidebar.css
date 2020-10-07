@@ -6,6 +6,7 @@
   height: 100%;
 }
 .sidebar__header {
+  justify-content: space-between;
   position: relative;
   font-weight: 500;
   padding: 0 16px;
@@ -27,6 +28,17 @@
   box-shadow: 0 1px rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05),
     0 2px 0 rgba(4, 4, 5, 0.05);
 }
+
+.sidebar__header > h3 {
+  font-size: 16px;
+  line-height: 20px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
 .sidebar__channels {
   flex: 1;
 }
@@ -42,6 +54,7 @@
   margin-bottom: 1px;
   background-color: #292b2f;
   color: white;
+  justify-content: space-between;
 }
 .sidebar__userImage {
   width: 32px;
@@ -54,6 +67,8 @@
 .sidebar__userName {
   font-size: 14px;
   font-weight: 500;
+
+  margin-right: 4px;
 }
 .sidebar__userStatus {
   width: 10px !important;
@@ -61,4 +76,57 @@
   color: #41af7d;
 
   position: absolute;
+}
+.sidebar__textChannel__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 16px;
+  align-items: center;
+  color: #8e9297;
+  padding-right: 16px;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 600;
+}
+.sidebar__textChannel__header > .MuiSvgIcon-root {
+  width: 22px;
+  height: 22px;
+}
+.sidebar__textChannel__header > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.sidebar__textChannel__channel {
+  height: 34px;
+  color: #72767d;
+  border-radius: 4px;
+  padding: 0 8px;
+  margin-left: 8px;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 500;
+  align-items: center;
+  display: flex;
+}
+.sidebar__textChannel__channel > span {
+  font-size: 20px;
+  padding-right: 4px;
+}
+.sidebar__userHeader {
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+}
+
+.sidebar__iconList > .MuiSvgIcon-root {
+  padding: 0 3px;
+  width: 20px;
+  height: 20px;
+  color: #b9bbbe;
+}
+.sidebar__iconList {
+  display: flex;
 }
