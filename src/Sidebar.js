@@ -52,7 +52,9 @@ const Sidebar = () => {
         <div className='sidebar__userHeader'>
           <div className='sidebar__imageContainer'>
             <img src={user?.picture} alt='' className='sidebar__userImage' />
-            <Brightness1Icon className='sidebar__userStatus' />
+            <div className='sidebar__userStatus'>
+              <Brightness1Icon />
+            </div>
           </div>
           <div className='sidebar__userName'>{user?.nickname}</div>
         </div>

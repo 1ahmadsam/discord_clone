@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createRef } from 'react';
 import './Chat.css';
 import Message from './Message';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -14,6 +14,7 @@ import {
   useSubscription,
   useApolloClient,
 } from '@apollo/client';
+import { animateScroll } from 'react-scroll';
 
 const MESSAGE_DETAILS = gql`
   fragment MessageDetails on Message {
@@ -89,6 +90,11 @@ const Chat = () => {
     }
   };
 
+  const scrollToBottom = () =>
+    (document.querySelector(
+      '.chat__messages'
+    ).scrollTop = document.querySelector('.chat__messages').scrollHeight);
+
   useSubscription(MESSAGE_ADDED, {
     onSubscriptionData: ({ subscriptionData }) => {
       console.log('sub data', subscriptionData);
@@ -106,6 +112,7 @@ const Chat = () => {
     console.log('yohoto', result);
     if (result.data) {
       setAllMessages(result.data?.allMessages);
+      scrollToBottom();
     }
   }, [result]);
 
@@ -138,6 +145,18 @@ const Chat = () => {
 
   return (
     <div className='chat'>
+      <div className='chat__messages'>
+        {allMessages.map((message) => (
+          <Message
+            message={message.message}
+            profile={message.profilePic}
+            timestamp={message.date}
+            username={message.username}
+            key={message.id}
+          />
+        ))}
+      </div>
+      <div className='chat__space'></div>
       <form className='chat__box' onSubmit={handleSubmit}>
         <div className='chat__inputBox'>
           <div className='chat__upload'>
@@ -157,18 +176,6 @@ const Chat = () => {
           </div>
         </div>
       </form>
-      <div className='chat__space'></div>
-      <div className='chat__messages'>
-        {allMessages.map((message) => (
-          <Message
-            message={message.message}
-            profile={message.profilePic}
-            timestamp={message.date}
-            username={message.username}
-            key={message.id}
-          />
-        ))}
-      </div>
 
       {/* <Message
         message={

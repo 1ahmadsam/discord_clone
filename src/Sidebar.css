@@ -63,6 +63,7 @@
 }
 .sidebar__imageContainer {
   margin-right: 8px;
+  display: flex;
 }
 .sidebar__userName {
   font-size: 14px;
@@ -74,8 +75,21 @@
   width: 10px !important;
   height: 10px !important;
   color: #41af7d;
+  margin-left: 19px;
 
+  margin-top: 15px;
   position: absolute;
+  /* border-radius: 50%;
+    border: 2px solid #292B2F;
+    background: border-radius: 50%;
+    border: 2px solid #292B2F; */
+}
+.sidebar__userStatus > .MuiSvgIcon-root {
+  background-color: #292b2f;
+  border-radius: 50%;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #292b2f;
 }
 .sidebar__textChannel__header {
   display: flex;
