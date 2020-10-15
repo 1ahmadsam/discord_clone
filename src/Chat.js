@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './Chat.css';
 import Message from './Message';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
@@ -14,7 +14,14 @@ import {
   useSubscription,
   useApolloClient,
 } from '@apollo/client';
-import { animateScroll } from 'react-scroll';
+import {
+  Link,
+  Element,
+  Events,
+  animateScroll as scroll,
+  scrollSpy,
+  scroller,
+} from 'react-scroll';
 
 const MESSAGE_DETAILS = gql`
   fragment MessageDetails on Message {
@@ -76,6 +83,7 @@ const Chat = () => {
   const { user } = useAuth0();
   const client = useApolloClient();
   const [createMessage, { data }] = useMutation(CREATE_MESSAGE);
+  const bottomRef = useRef();
 
   const updateCacheWith = (addedMessage) => {
     const includedIn = (set, object) =>
@@ -90,10 +98,9 @@ const Chat = () => {
     }
   };
 
-  const scrollToBottom = () =>
-    (document.querySelector(
-      '.chat__messages'
-    ).scrollTop = document.querySelector('.chat__messages').scrollHeight);
+  const scrollToBottom = () => {
+    bottomRef.current.scrollIntoView();
+  };
 
   useSubscription(MESSAGE_ADDED, {
     onSubscriptionData: ({ subscriptionData }) => {
@@ -112,9 +119,11 @@ const Chat = () => {
     console.log('yohoto', result);
     if (result.data) {
       setAllMessages(result.data?.allMessages);
-      scrollToBottom();
     }
   }, [result]);
+  useEffect(() => {
+    scrollToBottom();
+  }, [allMessages]);
 
   console.log('messages', allMessages);
   const handleSubmit = (e) => {
@@ -145,21 +154,9 @@ const Chat = () => {
 
   return (
     <div className='chat'>
-      <div className='chat__messages'>
-        {allMessages.map((message) => (
-          <Message
-            message={message.message}
-            profile={message.profilePic}
-            timestamp={message.date}
-            username={message.username}
-            key={message.id}
-          />
-        ))}
-      </div>
-      <div className='chat__space'></div>
       <form className='chat__box' onSubmit={handleSubmit}>
         <div className='chat__inputBox'>
-          <div className='chat__upload'>
+          <div className='chat__upload' onClick={scrollToBottom}>
             <AddCircleIcon />
           </div>
           <input
@@ -176,7 +173,19 @@ const Chat = () => {
           </div>
         </div>
       </form>
-
+      <div className='chat__space'></div>
+      <div className='chat__messages'>
+        {allMessages.map((message) => (
+          <Message
+            message={message.message}
+            profile={message.profilePic}
+            timestamp={message.date}
+            username={message.username}
+            key={message.id}
+          />
+        ))}
+        <div ref={bottomRef} className='chat__bottom'></div>
+      </div>
       {/* <Message
         message={
           'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.'
